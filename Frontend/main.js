@@ -2,41 +2,46 @@ const blur = document.getElementById('blur');
 const radius = document.getElementById('radius');
 
 const vector = new ol.layer.Heatmap({
+  title: "HeatMap",
   source: new ol.source.Vector({
-    url: '2012_Earthquakes_Mag5.kml',
-    format: new ol.format.KML({
-      extractStyles: false,
+    url: 'dataset.json',
+    format: new ol.format.GeoJSON({
+      dataProjection: "EPSG:32643",
+      featureProjection: "EPSG:32643"
     }),
   }),
-  blur: parseInt(blur.value, 10),
-  radius: parseInt(radius.value, 10),
+  blur: 50,
+  radius: 20,
   weight: function (feature) {
-    // 2012_Earthquakes_Mag5.kml stores the magnitude of each earthquake in a
-    // standards-violating <magnitude> tag in each Placemark.  We extract it from
-    // the Placemark's name instead.
-    const name = feature.get('name');
-    const magnitude = parseFloat(name.substr(2));
-    return magnitude - 5;
+    return feature.get("lpoTime");
   },
 });
 
 const raster = new ol.layer.Tile({
-  source: new ol.source.Stamen({
-    layer: 'toner',
-  }),
+  title: "OSM",
+  source: new ol.source.OSM(),
+  opacity: 0.5
 });
 
-new ol.Map({
+var map = new ol.Map({
   layers: [raster, vector],
   target: 'map',
   view: new ol.View({
-    center: [0, 0],
-    zoom: 2,
-  }),
+    //projection: projection,
+    units: "metric",
+    //extent: extent,
+    zoom: 6,
+    maxZoom: 13,
+    minZoom: 3,
+    maxResolution: 6000,
+    center: [ 1028954.9058868944, 5696879.17603661 ],
+    //numZoomLevels: 13
+  })
 });
 
+/*
 const blurHandler = function () {
-  vector.setBlur(parseInt(blur.value, 10));
+  vector.setBlur(parseInt(blur.value / map.getView().getZoom(), 10));
 };
 blur.addEventListener('input', blurHandler);
 blur.addEventListener('change', blurHandler);
@@ -46,3 +51,5 @@ const radiusHandler = function () {
 };
 radius.addEventListener('input', radiusHandler);
 radius.addEventListener('change', radiusHandler);
+*/
+//map.getView().on("change", blurHandler)
