@@ -1,0 +1,7 @@
+services:
+  backend:
+    build: swagger_codegen
+    ports: 
+    - 8000:8000
+    volumes:
+      - ./swagger_codegen:/usr/src/app

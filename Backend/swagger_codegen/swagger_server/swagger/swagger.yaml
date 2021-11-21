@@ -1,0 +1,215 @@
+openapi: 3.0.0
+info:
+  title: Roba nostra
+  license:
+    name: Apache 2.0
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: http://porcod.io/v1
+paths:
+  /iot/getPollutionInfo:
+    post:
+      tags:
+      - iot
+      summary: Get pollution info on your zone
+      operationId: get_pollution_info
+      requestBody:
+        description: Optional description in *Markdown*
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetPollutionInfoData'
+        required: true
+      responses:
+        "200":
+          description: Returns pollution info for that zone and nearby places
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollutionInfo'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.iot_controller
+  /iot/getDeviceData/{UUID}:
+    post:
+      tags:
+      - iot
+      summary: Get pollution info on your zone
+      operationId: get_device_data
+      parameters:
+      - name: UUID
+        in: path
+        description: UUID of the device
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 46
+      requestBody:
+        description: Optional description in *Markdown*
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DateRange'
+        required: true
+      responses:
+        "200":
+          description: Returns pollution info for that zone and nearby places
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollutionInfo'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.iot_controller
+  /iot/putDeviceData/{UUID}:
+    post:
+      tags:
+      - iot
+      summary: Update Pollution Info for a zone
+      operationId: put_device_data
+      parameters:
+      - name: UUID
+        in: path
+        description: UUID of the device
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 46
+      requestBody:
+        description: Optional description in *Markdown*
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PollutionUploadData'
+        required: true
+      responses:
+        "200":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollutionInfo'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.iot_controller
+  /iot/updateDevicePosition/{UUID}:
+    post:
+      tags:
+      - iot
+      summary: Update Pollution Info for a zone
+      operationId: update_device_position
+      parameters:
+      - name: UUID
+        in: path
+        description: UUID of the device
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 46
+      requestBody:
+        description: Optional description in *Markdown*
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WiFiList'
+        required: true
+      responses:
+        "200":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollutionInfo'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.iot_controller
+components:
+  schemas:
+    PollutionInfo:
+      type: object
+      properties:
+        lat:
+          type: number
+          description: Latitude
+          example: 46.6179554
+        lng:
+          type: number
+          description: Longitude
+          example: 13.8247993
+        LPOTime:
+          type: number
+          description: Longitude
+          example: 13
+      example:
+        lng: 13.8247993
+        lat: 46.6179554
+    PollutionUploadData:
+      type: object
+      properties:
+        inTemp:
+          type: number
+        outTemp:
+          type: number
+        LPOTime:
+          type: number
+        CO2:
+          type: number
+    GetPollutionInfoData:
+      type: object
+      properties:
+        lat:
+          type: number
+          description: Latitude
+          example: 46.6179554
+        lng:
+          type: number
+          description: Longitude
+          example: 13.8247993
+        range:
+          type: number
+          description: Range in meters to get sensor data
+          example: 10000
+    DateRange:
+      type: object
+      properties:
+        startDate:
+          type: string
+          description: Start date
+          example: YYYY-MM-DD HH:MM:SS
+        endDate:
+          type: string
+          description: End date
+          example: YYYY-MM-DD HH:MM:SS
+    WiFiList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WiFiList_inner'
+    WiFiList_inner:
+      type: object
+      properties:
+        macAddress:
+          type: string
+          example: 88:78:73:84:B9:C6
+        strength:
+          type: string
+          example: "-43"
+        SNR:
+          type: string
+          example: "0"
+        channel:
+          type: string
+          example: "11"
+
