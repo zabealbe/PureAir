@@ -1,25 +1,44 @@
-from tinydb import TinyDB, Query
+from pymongo import MongoClient
 from datetime import datetime
 import requests
 import geopy.distance
 
-db = TinyDB('/usr/src/app/db.json')
-geo_db = TinyDB('/usr/src/app/location_db.json')
-query = Query()
+client = MongoClient(   '192.168.1.102', # TODO: change this
+                        username='root',
+                        password='example',
+                        authMechanism='SCRAM-SHA-256')
+
+database = client["pureair_db"]
+data_col = database["data"]
+geo_col = database["geo"]
+
 
 def get_pollution_info(body):
-    res = db.search(query.UUID == 123)
+    ret = []
+    for x in geo_col.find():
+        data = x["geoinfo"]["location"]
+        coords = (data["lat"], data["lng"])
+        dst = geopy.distance.distance(coords, (body.lat, body.lng)).m
+
+        if dst < body.range:
+            lpo_time = data_col.find({"UUID": x["UUID"]})\
+            .limit(1)\
+            .sort({"$natural":"-1"})
+            ret.append({
+                "geoinfo": x["geoinfo"],
+                "LPOTime": lpo_time
+            })
     """
     coords_1 = (52.2296756, 21.0122287)
 coords_2 = (52.406374, 16.9251681)
 
 print geopy.distance.vincenty(coords_1, coords_2).km
 """
-    return res
+    return ret
 
 
 def put_device_data(body, uuid):
-    db.insert({
+    data_col.insert_one({
         "UUID": uuid,
         "sensors": {
             "co2": body.co2,
@@ -56,9 +75,15 @@ def update_device_position(body, uuid):
     r = requests.post(endpoint, json=data_for_gmap_api)
     pos = r.json()
 
-    geo_db.update({"geoinfo", pos}, query.UUID == uuid)
+    geo_col.update(
+        {"UUID": uuid},
+        {"$set":
+             {"geoinfo": pos}
+         },
+        True
+    )
 
-    print(geo_db.all())
+    return "Position updated"
 
 
 def get_device_data(body, uuid):
