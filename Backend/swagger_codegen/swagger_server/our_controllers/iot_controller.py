@@ -22,18 +22,12 @@ def get_pollution_info(body):
 
         if dst < body.range:
             lpo_time = data_col.find({"UUID": x["UUID"]})\
-            .limit(1)\
-            .sort({"$natural":"-1"})
+            .sort("x", 1).limit(1)[0]["sensors"]["lpo_time"]
             ret.append({
                 "geoinfo": x["geoinfo"],
-                "LPOTime": lpo_time
+                "lpo_time": lpo_time
             })
-    """
-    coords_1 = (52.2296756, 21.0122287)
-coords_2 = (52.406374, 16.9251681)
 
-print geopy.distance.vincenty(coords_1, coords_2).km
-"""
     return ret
 
 
@@ -46,7 +40,7 @@ def put_device_data(body, uuid):
             "out_temp": body.out_temp,
             "lpo_time": body.lpo_time,
         },
-        "timestamp": datetime.today().strftime("%Y-%m-%d %H:%M:%S")
+        "timestamp": datetime.now() #datetime.today().strftime("%Y-%m-%d %H:%M:%S")
     })
     return "Data added"
 
@@ -87,4 +81,12 @@ def update_device_position(body, uuid):
 
 
 def get_device_data(body, uuid):
-    return None
+    """
+    start = datetime.strptime(body.start_date, "%Y-%m-%d %H:%M:%S")
+end = datetime.strptime(body.end_date, "%Y-%m-%d %H:%M:%S")
+data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}})
+    """
+    start = datetime.strptime(body.start_date, "%Y-%m-%d %H:%M:%S")
+    end = datetime.strptime(body.end_date, "%Y-%m-%d %H:%M:%S")
+    data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}})
+    return data_col.find({"UUID": uuid})
