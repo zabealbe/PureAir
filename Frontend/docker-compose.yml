@@ -1,0 +1,5 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - 18080:18080
