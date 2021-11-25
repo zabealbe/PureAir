@@ -88,5 +88,8 @@ data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}})
     """
     start = datetime.strptime(body.start_date, "%Y-%m-%d %H:%M:%S")
     end = datetime.strptime(body.end_date, "%Y-%m-%d %H:%M:%S")
-    data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}})
-    return data_col.find({"UUID": uuid})
+    out = list(data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}}, {"_id": False}))
+    if len(out) == 0 and len(list(data_col.find({"UUID": uuid}))) == 0:
+        return 404, None
+    else:
+        return 200, {"status": "success", "data": out}

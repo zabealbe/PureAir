@@ -1,0 +1,35 @@
+services:
+  backend:
+    build: ./Backend/swagger_codegen
+    ports: 
+    - 8080:8080
+    volumes:
+      - ./Backend/swagger_codegen:/usr/src/app # just if WIP
+    depends_on:
+      - mongo
+    command: python -m swagger_server
+  
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+    ports:
+    - 27017:27017
+
+    volumes:
+    - ./Database/database:/data
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+    depends_on:
+      - mongo

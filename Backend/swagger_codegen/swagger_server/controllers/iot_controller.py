@@ -23,7 +23,11 @@ def get_device_data(body, uuid):  # noqa: E501
     """
     if connexion.request.is_json:
         body = DateRange.from_dict(connexion.request.get_json())  # noqa: E501
-    return iot_controller.get_device_data(body, uuid)
+    status, data = iot_controller.get_device_data(body, uuid)
+    if status == 200:
+        return data
+    else:
+        return [], 404
 
 
 def get_pollution_info(body):  # noqa: E501
