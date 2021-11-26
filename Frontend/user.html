@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="modal bg-dark" id="duuid_modal" style="display: none; opacity: 0">
+    <div class="modal bg-dark" id="uuid_modal" style="display: none; opacity: 0">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -42,14 +42,14 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="duuid_val" class="col-form-label">Please insert the Pure Air ID associated with your device:</label>
-                            <input type="text" class="form-control" id="duuid_val" autofocus>
+                            <label for="uuid_val" class="col-form-label">Please insert the Pure Air ID associated with your device:</label>
+                            <input type="text" class="form-control" id="uuid_val" autofocus>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <a type="button" href="index.html" class="btn btn">Go back</a>
-                    <button type="button" class="btn btn-primary" id="duuid_send">Send</button>
+                    <button type="button" class="btn btn-primary" id="uuid_send">Send</button>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
     <script>
         // UUID popup
         function show() {
-            $(duuid_modal)
+            $(uuid_modal)
                 .css({
                     top: "-=30px"
                 })
@@ -68,38 +68,38 @@
                 })
         }
         function hide() {
-            $(duuid_modal)
+            $(uuid_modal)
                 .animate({
                     opacity: 0,
                     top: "-=30px"
                 }, function (){
-                    this.css({
+                    $(uuid_modal).css({
                         top: "+=30px"
                     }).hide()
                 });
         }
 
-        let duuid_val = document.getElementById('duuid_val');
-        $(duuid_val).on("click", function () {
+        let uuid_val = document.getElementById('uuid_val');
+        $(uuid_val).on("click", function () {
             $(this).removeClass("alert-danger");
         })
-        var duuid_modal = document.getElementById('duuid_modal');
-        var duuid_send = document.getElementById('duuid_send');
-        duuid_send.addEventListener('click', function (event) {
+        var uuid_modal = document.getElementById('uuid_modal');
+        var uuid_send = document.getElementById('uuid_send');
+        uuid_send.addEventListener('click', function (event) {
             $.ajax({
-                url: "http://localhost:8080/v1/iot/getDeviceData/" + duuid_val.value,
+                url: "http://localhost:8080/v1/iot/getDeviceData/" + uuid_val.value,
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
                     startDate: "2021-06-12 10:00:00",
-                    endDate: "2021-06-16 10:00:00"
+                    endDate: "2022-06-16 10:00:00"
                 }),
                 success: function (data) {
                     console.log(data);
                     hide();
                 },
                 error: function (data) {
-                    $(duuid_val).addClass("alert-danger");
+                    $(uuid_val).addClass("alert-danger");
                 }
             });
         });
@@ -107,5 +107,5 @@
             show()
         }
     </script>
-    <script src="user.js"></script>
+    <script src="js/user.js"></script>
 </body>
