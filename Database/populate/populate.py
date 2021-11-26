@@ -20,7 +20,7 @@ length = len(json_data["features"])
 
 for feat in json_data["features"]:
     lpo = feat["properties"]["lpoTime"]
-    coords = feat["geometry"]["coordinates"]
+    #coords = feat["geometry"]["coordinates"]
     data_col.insert_one({
         "UUID": uuid,
         "sensors": {
@@ -31,10 +31,7 @@ for feat in json_data["features"]:
 
     pos = {
             "UUID": uuid,
-            "location": {
-                "lat": coords[0],
-                "lng": coords[1]
-            },
+            "location": feat["geometry"],
             "accuracy": 10000
         }
     #geo_col.update(

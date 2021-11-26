@@ -3,7 +3,12 @@ from datetime import datetime
 import requests
 import geopy.distance
 
-client = MongoClient('mongodb', username='root', password='example', authMechanism='SCRAM-SHA-256')
+client = MongoClient(
+    'mongodb',
+    username='root',
+    password='example',
+    authMechanism='SCRAM-SHA-256'
+)
 
 database = client["pureair_db"]
 data_col = database["data"]
@@ -11,21 +16,20 @@ geo_col = database["geo"]
 
 
 def get_pollution_info(body):
-    ret = []
-    for x in geo_col.find():
-        data = x["geoinfo"]["location"]
-        coords = (data["lat"], data["lng"])
-        dst = geopy.distance.distance(coords, (body.lat, body.lng)).m
+    ret = geo_col.find({
+        "location": {
+            "$near": {
+                "$geometry": {
+                    "type": "Point",
+                    "coordinates": [body.lat, body.lng],
+                },
+                "$maxDistance": body.range,
+            }
+        }
+    },
+   {"_id": False})
 
-        if dst < body.range:
-            lpo_time = data_col.find({"UUID": x["UUID"]})\
-            .sort("x", 1).limit(1)[0]["sensors"]["lpo_time"]
-            ret.append({
-                "geoinfo": x["geoinfo"],
-                "lpo_time": lpo_time
-            })
-
-    return ret
+    return list(ret)
 
 
 def put_device_data(body, uuid):
@@ -69,7 +73,14 @@ def update_device_position(body, uuid):
     geo_col.update(
         {"UUID": uuid},
         {"$set":
-             {"geoinfo": pos}
+             {"location": {
+                 "type": "Point",
+                 "coordinates": [
+                     pos["location"]["lat"],
+                     pos["location"]["lng"]
+                 ]
+             },
+             "accuracy": pos["accuracy"]}
          },
         True
     )
@@ -86,7 +97,11 @@ data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}})
     start = datetime.strptime(body.start_date, "%Y-%m-%d %H:%M:%S")
     end = datetime.strptime(body.end_date, "%Y-%m-%d %H:%M:%S")
 
-    out = list(data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}}, {"_id": False}))
+    out = list(data_col.find({"UUID": uuid,
+                              "timestamp": {
+                                  "$lt": end,
+                                  "$gte": start}
+                              }, {"_id": False}))
     if len(out) == 0 and len(list(data_col.find({"UUID": uuid}))) == 0:
         return {"error": "device not found"}, 404
     else:
