@@ -1,15 +1,20 @@
-services:
-  backend:
-    build: ./Backend/swagger_codegen
+services: # Lightweight busybox httpd
+  frontend:
+    build: Frontend
+    ports:
+      - 80:80
+  backend: # Swagger based
+    build: Backend/swagger_codegen
     ports: 
     - 8080:8080
     volumes:
-      - ./Backend/swagger_codegen:/usr/src/app # just if WIP
+      - ./Backend/swagger_codegen:/usr/src/app # Development only
     depends_on:
       - mongo
     command: python -m swagger_server
-  
-  mongo:
+    environment:
+      MONGODB_URL: mongodb
+  mongodb: # MondoDB
     image: mongo
     restart: always
     environment:
@@ -21,7 +26,6 @@ services:
 
     volumes:
     - ./Database/database:/data
-
   mongo-express:
     image: mongo-express
     restart: always
@@ -30,6 +34,6 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
     depends_on:
       - mongo

@@ -33,12 +33,11 @@
             </div>
         </div>
     </div>
-    <div class="modal animate__animated" id="duuid_modal" style="display: none; opacity: 0">
+    <div class="modal bg-dark" id="duuid_modal" style="display: none; opacity: 0">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Pure Air ID</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -49,6 +48,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <a type="button" href="index.html" class="btn btn">Go back</a>
                     <button type="button" class="btn btn-primary" id="duuid_send">Send</button>
                 </div>
             </div>
@@ -80,16 +80,31 @@
         }
 
         let duuid_val = document.getElementById('duuid_val');
+        $(duuid_val).on("click", function () {
+            $(this).removeClass("alert-danger");
+        })
         var duuid_modal = document.getElementById('duuid_modal');
         var duuid_send = document.getElementById('duuid_send');
         duuid_send.addEventListener('click', function (event) {
-            $.get("ajax/test.html", function(data) {
-                console.log(data);
+            $.ajax({
+                url: "http://localhost:8080/v1/iot/getDeviceData/" + duuid_val.value,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    startDate: "2021-06-12 10:00:00",
+                    endDate: "2021-06-16 10:00:00"
+                }),
+                success: function (data) {
+                    console.log(data);
+                    hide();
+                },
+                error: function (data) {
+                    $(duuid_val).addClass("alert-danger");
+                }
             });
         });
         if (window.localStorage.getItem("duiid") === null) {
             show()
-            console.log("cioa")
         }
     </script>
     <script src="user.js"></script>

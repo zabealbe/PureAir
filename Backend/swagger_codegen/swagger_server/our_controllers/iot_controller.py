@@ -3,10 +3,7 @@ from datetime import datetime
 import requests
 import geopy.distance
 
-client = MongoClient(   '192.168.1.102', # TODO: change this
-                        username='root',
-                        password='example',
-                        authMechanism='SCRAM-SHA-256')
+client = MongoClient('mongodb', username='root', password='example', authMechanism='SCRAM-SHA-256')
 
 database = client["pureair_db"]
 data_col = database["data"]
