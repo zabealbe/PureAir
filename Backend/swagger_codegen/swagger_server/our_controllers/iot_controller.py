@@ -88,6 +88,6 @@ data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}})
 
     out = list(data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}}, {"_id": False}))
     if len(out) == 0 and len(list(data_col.find({"UUID": uuid}))) == 0:
-        return 404, None
+        return {"error": "device not found"}, 404
     else:
-        return 200, {"status": "success", "data": out}
+        return {"status": "success", "data": out}, 200

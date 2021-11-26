@@ -3,6 +3,12 @@ services: # Lightweight busybox httpd
     build: Frontend
     ports:
       - 80:80
+    volumes:
+      - ./Frontend:/var/www:ro
+    environment:
+      - NGINX_HOST=frontend
+      - NGINX_PORT=80
+      - NGINX_CORS_ALLOWED=backend
   backend: # Swagger based
     build: Backend/swagger_codegen
     ports: 
