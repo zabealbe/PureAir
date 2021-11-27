@@ -26,7 +26,6 @@ services: # Lightweight busybox httpd
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-
     ports:
     - 27017:27017
 
@@ -43,3 +42,9 @@ services: # Lightweight busybox httpd
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
     depends_on:
       - mongo
+  mongo-populate: # MondoDB populator (for testing purposes only)
+    build: Database/populate
+    depends_on:
+      - "mongodb"
+    environment:
+      MONGODB_URL: mongodb://root:example@mongodb:27017/

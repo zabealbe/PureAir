@@ -1,38 +1,42 @@
 from pymongo import MongoClient
 import json
 import requests
-from datetime import datetime
+import time
+import os
+import random
 
-client = MongoClient(   '192.168.1.102', # TODO: change this
-                        username='root',
-                        password='example',
-                        authMechanism='SCRAM-SHA-256')
+os.getenv("MONGODB_URL")
+
+client = MongoClient(os.getenv("MONGODB_URL"))
 
 database = client["pureair_db"]
 data_col = database["data"]
 geo_col = database["geo"]
 
-with open("Database/populate/dataset.json") as f:
+with open("dataset.json") as f:
     json_data = json.load(f)
 
 uuid = 1
 length = len(json_data["features"])
 
 for feat in json_data["features"]:
-    lpo = feat["properties"]["lpoTime"]
     #coords = feat["geometry"]["coordinates"]
     data_col.insert_one({
         "UUID": uuid,
         "sensors": {
-            "LPOTime": lpo
+            "lpo_time": feat["properties"]["lpoTime"],
+            "co2": random.randrange(400, 2000), # 400ppm typical outdoor, 1000 typical indoor, 2000 bad
+            "in_temp": random.randrange(13, 28),
+            "out_temp": random.randrange(0, 38)
+
         },
-        "timestamp": datetime.now()
+        "timestamp": int(time.time())
     })
 
     pos = {
             "UUID": uuid,
             "location": feat["geometry"],
-            "accuracy": 10000
+            "accuracy": random.randrange(5000, 10000)
         }
     #geo_col.update(
     #    {"UUID": uuid},
@@ -44,3 +48,13 @@ for feat in json_data["features"]:
 
     print(int(100*uuid/length) ,uuid, "/", length)
     uuid += 1
+
+data_col.create_index([
+    ("UUID", 1)
+])
+geo_col.create_index([
+    ("UUID", 1),
+])
+geo_col.create_index([
+    ("location", "2dsphere")
+])
