@@ -95,7 +95,7 @@
                     endDate: "2022-06-16 10:00:00"
                 }),
                 success: function (data) {
-                    console.log(data);
+                    window.localStorage.setItem("duiid", uuid_val.value)
                     hide();
                 },
                 error: function (data) {

@@ -5,7 +5,6 @@ const zoom = 11;
 const vector = new ol.layer.Heatmap({
   title: "HeatMap",
   source: new ol.source.Vector({
-    url: 'dataset.json',
     format: new ol.format.GeoJSON({
       dataProjection: "EPSG:32643",
       featureProjection: "EPSG:32643"
@@ -59,7 +58,37 @@ geocoder.on('addresschosen', function(evt){
   var feature = evt.feature,
       coord = evt.coordinate;
   map.getView().animate({ zoom: zoom, center: evt.coordinate });
+  getData(evt.place.lon, evt.place.lat, 100000);
 });
+
+function getData(lng, lat, range) {
+  console.log(lng, lat, range)
+  $.ajax({
+    url: "http://localhost:8080/v1/iot/getPollutionInfo",
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      lat: parseFloat(lat),
+      lng: parseFloat(lng),
+      range: range
+    }),
+    success: function (data) {
+      var format = new ol.format.GeoJSON({
+        featureProjection:"EPSG:3857"
+      });
+      vector.getSource().clear()
+      vector.getSource().addFeatures(format.readFeatures(data))
+    },
+    error: function (data) {
+      console.log(data)
+    }
+  });
+}
+
+(function(){
+  const coord = ol.proj.transform(map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+  getData(coord[0], coord[1], 100000);
+})();
 
 /*
 const blurHandler = function () {

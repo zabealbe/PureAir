@@ -29,7 +29,16 @@ def get_pollution_info(body):
     },
    {"_id": False})
 
-    return list(ret)
+    geojson = {
+        "features": []
+    }
+    for r in list(ret):
+        geojson["features"].append({
+            "geometry": r["location"],
+            "type": "Feature"
+        })
+
+    return geojson
 
 
 def put_device_data(body, uuid):
