@@ -16,7 +16,7 @@ services: # Lightweight busybox httpd
     volumes:
       - ./Backend/swagger_codegen:/usr/src/app # Development only
     depends_on:
-      - mongo
+      - mongodb
     command: python -m swagger_server
     environment:
       MONGODB_URL: mongodb
