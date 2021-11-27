@@ -21,7 +21,7 @@ def get_pollution_info(body):
             "$near": {
                 "$geometry": {
                     "type": "Point",
-                    "coordinates": [body.lat, body.lng],
+                    "coordinates": [body.lng, body.lat],
                 },
                 "$maxDistance": body.range,
             }
@@ -76,8 +76,8 @@ def update_device_position(body, uuid):
              {"location": {
                  "type": "Point",
                  "coordinates": [
-                     pos["location"]["lat"],
-                     pos["location"]["lng"]
+                    pos["location"]["lng"],
+                    pos["location"]["lat"]
                  ]
              },
              "accuracy": pos["accuracy"]}
