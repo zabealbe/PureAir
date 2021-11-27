@@ -41,7 +41,7 @@ services: # Lightweight busybox httpd
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
     depends_on:
-      - mongo
+      - mongodb
   mongo-populate: # MondoDB populator (for testing purposes only)
     build: Database/populate
     depends_on:
