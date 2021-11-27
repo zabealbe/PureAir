@@ -30,6 +30,7 @@ def get_pollution_info(body):
    {"_id": False})
 
     geojson = {
+        "type": "FeatureCollection",
         "features": []
     }
     for r in list(ret):
