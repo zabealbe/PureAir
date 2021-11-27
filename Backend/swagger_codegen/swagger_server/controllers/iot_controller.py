@@ -75,3 +75,6 @@ def put_device_data(body, uuid):  # noqa: E501
     if connexion.request.is_json:
         body = PollutionUploadData.from_dict(connexion.request.get_json())  # noqa: E501
     return iot_controller.put_device_data(body, uuid)
+
+def get_home_assistant(uuid):
+    return iot_controller.get_home_assistant(uuid)

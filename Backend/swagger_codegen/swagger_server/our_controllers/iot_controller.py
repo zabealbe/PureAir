@@ -4,7 +4,7 @@ import requests
 import geopy.distance
 
 client = MongoClient(
-    'mongodb',
+    '192.168.1.102',
     username='root',
     password='example',
     authMechanism='SCRAM-SHA-256'
@@ -115,3 +115,8 @@ data_col.find({"UUID": uuid, "timestamp": {"$lt": end, "$gte": start}})
         return {"error": "device not found"}, 404
     else:
         return {"status": "success", "data": out}, 200
+
+def get_home_assistant(uuid):
+    ret = data_col.find({"UUID": uuid}, {"_id": False})\
+        .sort("timestamp", -1).limit(1)
+    return list(ret)[0]["sensors"]

@@ -136,6 +136,33 @@ paths:
                   $ref: '#/components/schemas/PollutionInfo'
                 x-content-type: application/json
       x-openapi-router-controller: swagger_server.controllers.iot_controller
+
+  /iot/getHomeAssistant/{UUID}:
+    get:
+      tags:
+        - iot
+      summary: Get pollution info endpoint for Home Assistant
+      operationId: get_home_assistant
+      parameters:
+        - name: UUID
+          in: path
+          description: UUID of the device
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            example: 46
+      responses:
+        "200":
+          description: Returns latest pollution reading for that sensor
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 50
+      x-openapi-router-controller: swagger_server.controllers.iot_controller
+
 components:
   schemas:
     PollutionInfo:
