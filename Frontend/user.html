@@ -73,9 +73,9 @@
                                 Outside temperature
                             </h6>
                             <h5 style="font-size: 56px; color: #1F3E4F"> 
-                                <span id="out_temp_now">12</span>&deg
+                                <span id="out_temp_now">__</span>&deg
                                 <span style="font-size: 16px; color: #8F9EA7; margin-left: -30px;">
-                                    /<span id="out_temp_min">10</span>&deg
+                                    /<span id="out_temp_min">__</span>&deg
                                 </span>
                             </h5>
                           
@@ -216,7 +216,7 @@
             });
         });
         var uuid_value;
-        if ((uuid_value = window.localStorage.getItem("duiid")) === null) {
+        if (window.localStorage.getItem("duiid") === null) {
             show()
         } else {
             load();
@@ -224,6 +224,7 @@
         var SENSOR_DATA = {};
 
         function load(){
+            uuid_value = window.localStorage.getItem("duiid");
             $.ajax({
                 url: `http://localhost:8080/v1/iot/getHomeAssistant/${uuid_value}`,
                 type: "GET",
