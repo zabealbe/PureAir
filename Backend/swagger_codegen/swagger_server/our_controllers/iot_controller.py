@@ -4,7 +4,7 @@ import requests
 import geopy.distance
 
 client = MongoClient(
-    '192.168.1.102',
+    'mongodb',
     username='root',
     password='example',
     authMechanism='SCRAM-SHA-256'
