@@ -1,93 +1,47 @@
-# PureAir
+# Pure Air
+Air quality monitoring system.
 
-
+Pure Air stack is designed to be horizontally scalable through [kubernetes](http://kubernetes.io), both Frontend and
+Backend are stateless and designed as a microservice that can be run in a container.
 
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+Run our web stack with:
+```bash
+$: docker-compose up
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/albertoz/pureair.git
-git branch -M main
-git push -uf origin main
-```
+Once everything started up you can start sending data with your Pure Air IOT device, check out [Hardware](Hardware) for 
+the source code.
 
-## Integrate with your tools
+## Frontend
+Composed of a Private area and a [Private area](Frontend/user.html) and a [Public area](Frontend/index.html).
 
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://gitlab.com/albertoz/pureair/-/settings/integrations)
+| Private area | Public area |
+|---|---|
+| ![Private area](docs/f_private.png)  | ![Public area](docs/f_public.png) |
 
-## Collaborate with your team
+The private area empowers the user by giving him useful insights to make educated decisions, such as suggestsing 
+the house ventilation schedule by fetching sensor data from the [Pure Air APIs](Backend).
 
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+The public area empowers the people by giving everyone a powerful tool to monitor the city pollution. This data can be 
+used by the authorities to improve the well being of citizens or can be used by citizens themselves to force authorities to take action.
 
-## Test and Deploy
+## Backend
+Based on [sawagger.io](https://swagger.io/) and though to be scalable through container-based replication systems such as [kubernetes](https://kubernetes.io).
 
-Use the built-in continuous integration in GitLab.
++ Three private APIs endpoints for the user private area
 
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
++ Public API endpoint `http://[BACKEND_URL]/v1/getPollutionInfo` for third parties to build upon,
+easing the integration process by using the standard format [GeoJSON](https://geojson.org/)
 
-***
+![Backend](docs/b.png)
 
-# Editing this README
+## Database
+MongoDB is our database, flexible enough and optimized for our needs is able to manage well 
+GeoJSON data with its [2dsphere geospatial index](https://docs.mongodb.com/manual/core/2dsphere/)
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:7849c1d6ee8ad8b5dbc3c0e4076e3c18?https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+For testing purposes we created a [populator](Database/populate/populate.py) script to create, fill and index the
+database.
 
 ## License
 For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
-
