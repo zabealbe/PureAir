@@ -36,10 +36,10 @@
                                 Inside temperature
                             </h6>
                             <h5 style="font-size: 56px; color: #1F3E4F"> 
-                                <span id="in_temp_text">21</span>&deg
-                                <spam style="font-size: 16px; color: #8F9EA7; margin-left: -30px;">
-                                    /<span id="in_temp_text_max">23</span>&deg
-                                </spam>
+                                <span id="in_temp_text">__</span>&deg
+                                <span style="font-size: 16px; color: #8F9EA7; margin-left: -30px;">
+                                    /<span id="in_temp_text_max">__</span>&deg
+                                </span>
                             </h5>
                           
                             <p style="font-size: 16px; color: #1F3E4F">We reccomend keeping the house temperature between 21&deg and 22&deg. <a href="https://www.endesa.com/en/blogs/endesa-s-blog/air-conditioning/home-recommended-temperature">?</a></p>
@@ -50,15 +50,15 @@
                         <div class="card-body text-center">
                             <h6 class="card-subtitle mb-2" style="font-size: 24px; color: #1F3E4F; padding-bottom: 60px;">
                                 CO
-                                <spam style="font-size: 16px; color: #1F3E4F; margin-left: -6px;">
+                                <span style="font-size: 16px; color: #1F3E4F; margin-left: -6px;">
                                     2
-                                </spam>
+                                </span>
                             </h6>
                             <h5 style="font-size: 56px; color: #1F3E4F"> 
-                                <span id="co2_text">860</span>
-                                <spam style="font-size: 16px; color: #8F9EA7; margin-left: -12px;">
+                                <span id="co2_text">____</span>
+                                <span style="font-size: 16px; color: #8F9EA7; margin-left: -12px;">
                                     PPM
-                                </spam>
+                                </span>
                             </h5>
 
                             <p style="font-size: 16px; color: #1F3E4F">The typical value for a well ventilated indoor space is between 400-1,000ppm. </p>
@@ -73,12 +73,10 @@
                                 Outside temperature
                             </h6>
                             <h5 style="font-size: 56px; color: #1F3E4F"> 
-                                <a id="xx">
-                                    <span id="out_temp_now">12</span>
-                                </a>&deg
-                                <spam style="font-size: 16px; color: #8F9EA7; margin-left: -30px;">
+                                <span id="out_temp_now">12</span>&deg
+                                <span style="font-size: 16px; color: #8F9EA7; margin-left: -30px;">
                                     /<span id="out_temp_min">10</span>&deg
-                                </spam>
+                                </span>
                             </h5>
                           
                             <p style="font-size: 16px; color: #1F3E4F">If the outside temperature is greatly different from your house's you might waste energy by ventilating your rooms.</p>
@@ -90,13 +88,13 @@
                                 Outside pollution
                             </h6>
                             <h5 style="font-size: 56px; color: #1F3E4F"> 
-                                <span id="aqi_text">50</span>
-                                <spam style="font-size: 16px; color: #8F9EA7; margin-left: -12px;">
+                                <span id="aqi_text">___</span>
+                                <span style="font-size: 16px; color: #8F9EA7; margin-left: -12px;">
                                     AQI
-                                </spam>
+                                </span>
                             </h5>
                           
-                            <p style="font-size: 16px; color: #1F3E4F">The air quality index is a standard that defines the outside pollution levels, a level below 50 is considered acceptable.</p>
+                            <p style="font-size: 16px; color: #1F3E4F">The Air Quality Index is a standard that defines the outside pollution levels, a level below 100 is considered acceptable.</p>
                         </div>
                     </div>
                 </div>
@@ -117,7 +115,7 @@
                             city pollution getting inside. <br><br>
                             With Pure Air you can evaluate the best moment to open your window.
                         </p>
-                        <div 
+                        <div
                             class="alert" 
                             role="alert" 
                             id="alert_change_color"
@@ -127,10 +125,10 @@
                         </div>
 
                         <h5 style="font-size: 56px; color: #1F3E4F; margin-top: 55px;"> 
-                            <span id="wh_text">50</span>
-                            <spam style="font-size: 24px; color: #1F3E4F; margin-left: -12px;">
+                            <span id="wh_text">__</span>
+                            <span style="font-size: 24px; color: #1F3E4F; margin-left: -12px;">
                                 W/h
-                            </spam>
+                            </span>
                         </h5>
                         <p style="font-weight: 500; line-height: 28px; font-size: 18px; color: #1F3E4F; margin-top: 16px; letter-spacing: -0.4px;">
                             loss of energy by <br/>
@@ -140,7 +138,6 @@
                     </div>
                 </div>
               </div>
-        
               <div class="modal bg-dark" id="uuid_modal" style="display: none; opacity: 0">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -162,7 +159,6 @@
                     </div>
                 </div>
             </div>
-
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script
@@ -244,7 +240,7 @@
                     $("#aqi_text").text(data.lpo_time);
 
                     let wh = Math.abs(in_temp - out_temp)*20;
-                    $("#kwh_text").text(wh);
+                    $("#wh_text").text(wh);
 
                     let green_hex = "#C1E1C1",
                         red_hex = "#FAA0A0";
