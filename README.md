@@ -43,6 +43,12 @@ GeoJSON data with its [2dsphere geospatial index](https://docs.mongodb.com/manua
 For testing purposes we created a [populator](Database/populate/populate.py) script to create, fill and index the
 database.
 
+## Home assistant
+We empower the user by providing home assist integration that can be used in conjunction within a smart home in a
+domotic environment.
+
+![Backend](Hassio/images/home.png)
+
 ## License
 [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
 Copyright &copy; PureAir team
