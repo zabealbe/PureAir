@@ -11,9 +11,9 @@ const vector = new ol.layer.Heatmap({
     }),
   }),
   blur: 120,
-  radius: 20,
+  radius: 40,
   weight: function (feature) {
-    return 4;
+    return 10;
   },
 });
 

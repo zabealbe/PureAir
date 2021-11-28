@@ -2,7 +2,7 @@ services: # Lightweight busybox httpd
   frontend:
     build: Frontend
     ports:
-      - 12380:80
+      - 80:80
     volumes:
       - ./Frontend:/var/www:ro
     environment:
