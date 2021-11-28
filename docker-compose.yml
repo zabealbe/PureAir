@@ -2,7 +2,7 @@ services: # Lightweight busybox httpd
   frontend:
     build: Frontend
     ports:
-      - 80:80
+      - 12380:80
     volumes:
       - ./Frontend:/var/www:ro
     environment:
@@ -26,16 +26,16 @@ services: # Lightweight busybox httpd
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-    - 27017:27017
+#    ports:
+#    - 27017:27017
 
     volumes:
     - ./Database/database:/data
   mongo-express:
     image: mongo-express
     restart: always
-    ports:
-      - 8081:8081
+#    ports:
+#      - 8081:8081
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
