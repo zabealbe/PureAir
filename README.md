@@ -8,7 +8,7 @@ Backend are stateless and designed as a microservice that can be run in a contai
 
 Run our web stack with:
 ```bash
-$: docker-compose up
+docker-compose up
 ```
 Once everything started up you can start sending data with your Pure Air IOT device, check out [Hardware](Hardware) for 
 the source code.
@@ -27,7 +27,7 @@ The public area empowers the people by giving everyone a powerful tool to monito
 used by the authorities to improve the well being of citizens or can be used by citizens themselves to force authorities to take action.
 
 ## Backend
-Based on [sawagger.io](https://swagger.io/) and though to be scalable through container-based replication systems such as [kubernetes](https://kubernetes.io).
+Based on [Swagger](https://swagger.io/) and [OpenAPI](https://swagger.io/specification/) and though to be scalable through container-based replication systems such as [kubernetes](https://kubernetes.io).
 
 + Three private APIs endpoints for the user private area
 
@@ -44,4 +44,5 @@ For testing purposes we created a [populator](Database/populate/populate.py) scr
 database.
 
 ## License
-For open source projects, say how it is licensed.
+[GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+Copyright &copy; PureAir team

@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 import json
-import requests
 import time
 import os
 import random
