@@ -1,6 +1,3 @@
-const blur = document.getElementById('blur');
-const radius = document.getElementById('radius');
-
 const zoom = 11;
 const vector = new ol.layer.Heatmap({
   title: "HeatMap",
