@@ -147,8 +147,8 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="uuid_val" class="col-form-label">Please insert the Pure Air ID associated with your device:</label>
-                                    <input type="text" class="form-control" id="uuid_val" autofocus>
+                                    <label for="uuid_val" class="col-form-label" >Please insert the Pure Air ID associated with your device:</label>
+                                    <input type="text" class="form-control" id="uuid_val">
                                 </div>
                             </form>
                         </div>
@@ -177,6 +177,7 @@
                     opacity: 1,
                     top: "+=30px"
                 })
+            $(uuid_val).focus()
         }
         function hide() {
             $(uuid_modal)
@@ -196,7 +197,20 @@
         })
         var uuid_modal = document.getElementById('uuid_modal');
         var uuid_send = document.getElementById('uuid_send');
-        uuid_send.addEventListener('click', function (event) {
+        uuid_val.addEventListener('keypress', function (e) {
+            if (e.key == "Enter") {
+                e.preventDefault()
+                submitDUIID();
+            }
+        });
+        uuid_send.addEventListener('click', submitDUIID);
+
+        if ((uuid_value = window.sessionStorage.getItem("duiid")) === null) {
+            show()
+        } else {
+            load();
+        }
+        function submitDUIID() {
             $.ajax({
                 url: "/v1/iot/getDeviceData/" + uuid_val.value,
                 type: "POST",
@@ -206,7 +220,7 @@
                     endDate: "2022-06-16 10:00:00"
                 }),
                 success: function (data) {
-                    window.localStorage.setItem("duiid", uuid_val.value)
+                    window.sessionStorage.setItem("duiid", uuid_val.value)
                     hide();
                     load();
                 },
@@ -214,19 +228,10 @@
                     $(uuid_val).addClass("alert-danger");
                 }
             });
-        });
-        var uuid_value;
-        if (window.localStorage.getItem("duiid") === null) {
-            show()
-        } else {
-            load();
         }
-        var SENSOR_DATA = {};
-
         function load(){
-            uuid_value = window.localStorage.getItem("duiid");
             $.ajax({
-                url: `/v1/iot/getHomeAssistant/${uuid_value}`,
+                url: `http://localhost:8080/v1/iot/getHomeAssistant/` + window.sessionStorage.getItem("duiid"),
                 type: "GET",
                 success: (data) => {
                     $("#co2_text").text(data.co2);
