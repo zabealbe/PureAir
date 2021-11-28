@@ -4,7 +4,7 @@ import requests
 import geopy.distance
 
 client = MongoClient(
-    'mongodb',
+    '192.168.1.102',
     username='root',
     password='example',
     authMechanism='SCRAM-SHA-256'
@@ -63,17 +63,16 @@ def update_device_position(body, uuid):
         "radioType": "gsm",
         "carrier": "Vodafone",
         "considerIp": True,
-        "cellTowers": [
-
-        ],
+        "cellTowers": [],
         "wifiAccessPoints": [
             {
-                "macAddress": "88:78:73:84:B9:C6",
-                "signalStrength": -43,
-                "signalToNoiseRatio": 0,
-                "channel": 11,
+                "macAddress": wlan.mac_address,
+                "signalStrength": wlan.strength,
+                "signalToNoiseRatio": wlan.snr,
+                "channel": wlan.channel,
                 "age": 0
             }
+            for wlan in body
         ]
     }
     endpoint = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyC55fOO_Y6J7hmy-zfHqMCFRMBOZl5ZSJc"
