@@ -119,7 +119,7 @@
                             class="alert" 
                             role="alert" 
                             id="alert_change_color"
-                            style="display: inline-block; line-height: 30px; width: 445px; margin-top: 20px; background: #C1E1C1; border-radius: 10px;"
+                            style="display: inline-block; line-height: 30px; width: 445px; margin-top: 20px; border-radius: 10px;"
                         >
                             <span id="can_open_window">Now you can open your window</span> <img style="width: 50px; float: right;" src="img/air.svg"/>
                         </div>
@@ -242,8 +242,8 @@
                     let wh = Math.abs(in_temp - out_temp)*20;
                     $("#wh_text").text(wh);
 
-                    let green_hex = "#C1E1C1",
-                        red_hex = "#FAA0A0";
+                    let green_hex = "#E9F6EC",
+                        red_hex = "#FFEAEA";
                     
                     if(wh < 100){
                         $("#can_open_window").text("Now you can open your window")
