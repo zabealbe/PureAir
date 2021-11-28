@@ -88,6 +88,19 @@ Here it is the final prototype:
 
 ![Prototype](Hardware/images/prototype.jpg)
 
+## Firmware
+
+The firmware is written in [Rust](https://www.rust-lang.org/), a powerful, fast and secure language
+that can target the esp32 chipset, with a full standard library support.
+
+Rust has also a huge set of libraries, all open-source and hosted on [crates.io](https://crates.io/)
+
+This allows faster code writing, while having much bigger safety than other low-level languages such as C or C++.
+
+Under the hood the Rust standard library for esp32 calls the routines of the official open-source Espressif real time os.
+
+For information about building and running the PureAir firmware, take a look at the [Hardware README](Hardware/README.md)
+
 ## License
 
 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
