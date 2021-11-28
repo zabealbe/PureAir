@@ -49,3 +49,30 @@ It then uploads all the data to a remote server for logging and automation and a
 
 To configure the firmware, take a look at the file src/config.rs, where you can change the gpio pins
 associated with sensors and the server api address.
+
+## Hardware
+
+The board used for the project is a nodemcu with an esp32 microcontroller.
+
+![Temperature sensor](images/nodemcu.jpg)
+
+The following sensors are used to obtain the reads:
+
+- Two ds18b20 for indoor and outdoor temperature measurements
+
+  ![Temperature sensor](images/temp_sensor.jpg)
+
+- A MQ-135 sensor for indoor CO2 measurement
+
+  ![Temperature sensor](images/co2_sensor.jpg)
+
+- A Grove Dust Sensor(PPD42NS) for outdoor pollution levels
+
+  ![Temperature sensor](images/pollution_sensor.jpg)
+
+To communicate between the internal and external modules, a normal RJ11 cable can be used,
+with the following setup:
+-Red wire -> 5v
+-Black wire -> GND
+-Yellow wire -> Temperature sensor one wire bus
+-Green wire -> LO-time dust sensor signal
