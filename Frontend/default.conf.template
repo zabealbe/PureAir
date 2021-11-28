@@ -19,4 +19,8 @@ server {
 
     root /var/www;
   }
+
+  location /v1/ {
+    proxy_pass http://backend:8080/v1/;
+  }
 }

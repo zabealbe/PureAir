@@ -64,7 +64,7 @@ geocoder.on('addresschosen', function(evt){
 function getData(lng, lat, range) {
   console.log(lng, lat, range)
   $.ajax({
-    url: "http://localhost:8080/v1/iot/getPollutionInfo",
+    url: "/v1/iot/getPollutionInfo",
     type: "POST",
     contentType: "application/json",
     data: JSON.stringify({

@@ -2,7 +2,7 @@ services: # Lightweight busybox httpd
   frontend:
     build: Frontend
     ports:
-      - 80:80
+      - 12380:80
     volumes:
       - ./Frontend:/var/www:ro
     environment:
@@ -11,8 +11,8 @@ services: # Lightweight busybox httpd
       - NGINX_CORS_ALLOWED=backend
   backend: # Swagger based
     build: Backend/swagger_codegen
-    ports: 
-    - 8080:8080
+#    ports: 
+#    - 8080:8080
     volumes:
       - ./Backend/swagger_codegen:/usr/src/app # Development only
     depends_on:

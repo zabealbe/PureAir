@@ -198,7 +198,7 @@
         var uuid_send = document.getElementById('uuid_send');
         uuid_send.addEventListener('click', function (event) {
             $.ajax({
-                url: "http://localhost:8080/v1/iot/getDeviceData/" + uuid_val.value,
+                url: "/v1/iot/getDeviceData/" + uuid_val.value,
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -226,7 +226,7 @@
         function load(){
             uuid_value = window.localStorage.getItem("duiid");
             $.ajax({
-                url: `http://localhost:8080/v1/iot/getHomeAssistant/${uuid_value}`,
+                url: `/v1/iot/getHomeAssistant/${uuid_value}`,
                 type: "GET",
                 success: (data) => {
                     $("#co2_text").text(data.co2);
