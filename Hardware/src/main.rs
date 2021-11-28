@@ -78,8 +78,8 @@ fn main() -> Result<()> {
     println!("Initializing led...");
 
     // Green pin
-    let mut pin = unsafe { GPIO_GREEN_LED::new() }.into_input_output().unwrap();
-    pin.set_high();
+    let mut green_led_gpio = unsafe { GPIO_GREEN_LED::new() }.into_input_output().unwrap();
+    green_led_gpio.set_high();
 
     println!("Initializing sensors...");
 
@@ -111,8 +111,6 @@ fn main() -> Result<()> {
     let access_points = wifi_manager.list_access_points().unwrap();
     wifi_manager.connect_to_network(env!("PUREAIR_WIFI_SSID").into(), env!("PUREAIR_WIFI_PASSWORD").into());
 
-    // "/v1/iot"
-
     let http_config = EspHttpClientConfiguration::default();
     let mut client = EspHttpClient::new(&http_config).unwrap();
 
@@ -130,6 +128,7 @@ fn main() -> Result<()> {
 
 
     loop {
+
         let in_temp = if let Ok(temp) = temp_bus_internal.query_temperature() {
             println!("Internal temp: {} C", temp);
             Some(temp)
@@ -151,14 +150,30 @@ fn main() -> Result<()> {
         let co2 = co2_sensor.query_co2();
         println!("Air quality: {}", co2);
 
+        // Compute the threshold to decide if the window should be opened
+
+        let mut open_threshold = 0.0;
+        if in_temp.is_some() && out_temp.is_some() {
+            open_threshold += (in_temp.unwrap() - out_temp.unwrap()).abs() * K1;
+        }
+
+        open_threshold += lpo_time.unwrap() * K2;
+        open_threshold += co2 * K3;
+
+        // Turn on the green led if we are above the threshold
+        if open_threshold > K4 {
+            green_led_gpio.set_high();
+        }
+        else {
+            green_led_gpio.set_low();
+        }
+
         let sensors_data = PutDeviceData {
             in_temp,
             out_temp,
             lpo_time,
             co2: Some(co2),
         };
-
-
 
         // Send updated sensors data
         {
@@ -171,11 +186,10 @@ fn main() -> Result<()> {
 
         println!("Data sent to server!");
 
-
-        // Sleep to send updates to server every 30 minutes
-        const SECONDS_BETWEEN_UPDATES: u32 = 1;// 60 * 30;
+        // Sleep to send updates to server every minute
+        const SECONDS_BETWEEN_UPDATES: u32 = 60;
         unsafe {
-            vTaskDelay(portTICK_PERIOD_MS * SECONDS_BETWEEN_UPDATES);
+            vTaskDelay(portTICK_PERIOD_MS * 1000 * SECONDS_BETWEEN_UPDATES);
         }
     }
 }
