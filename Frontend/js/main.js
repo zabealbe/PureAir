@@ -10,10 +10,10 @@ const vector = new ol.layer.Heatmap({
       featureProjection: "EPSG:32643"
     }),
   }),
-  blur: 50,
+  blur: 120,
   radius: 20,
   weight: function (feature) {
-    return feature.get("lpoTime");
+    return 4;
   },
 });
 
@@ -58,7 +58,7 @@ geocoder.on('addresschosen', function(evt){
   var feature = evt.feature,
       coord = evt.coordinate;
   map.getView().animate({ zoom: zoom, center: evt.coordinate });
-  getData(evt.place.lon, evt.place.lat, 100000);
+  getData(evt.place.lon, evt.place.lat, 10000);
 });
 
 function getData(lng, lat, range) {
