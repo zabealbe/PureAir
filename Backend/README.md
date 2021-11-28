@@ -17,9 +17,8 @@ headingLevel: 2
 
 ---
 
-<!-- Generator: Widdershins v4.0.1 -->
-
-<h1 id="pureair">PureAir v1.0.0</h1>
+<h1 id="pureair">PureAir APIs v1.0.0</h1>
+Built with <a href="https://swagger.io">swagger.io</a>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
