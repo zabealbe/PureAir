@@ -72,7 +72,12 @@ The following sensors are used to obtain the reads:
 
 To communicate between the internal and external modules, a normal RJ11 cable can be used,
 with the following setup:
--Red wire -> 5v
--Black wire -> GND
--Yellow wire -> Temperature sensor one wire bus
--Green wire -> LO-time dust sensor signal
+
+- Red wire -> 5v
+- Black wire -> GND
+- Yellow wire -> Temperature sensor one wire bus
+- Green wire -> LO-time dust sensor signal
+
+Here it is the final prototype:
+
+![Prototype](images/prototype.jpg)
