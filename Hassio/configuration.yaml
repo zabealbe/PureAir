@@ -1,8 +1,0 @@
-sensor:
-  - platform: rest
-    resource: "http://[HOSTNAME]/v1/iot/getHomeAssistant/[DEVICE_ID]"
-    name: PureAir
-    force_update: true
-    scan_interval: 60
-    value_template: "{{ (value_json.LPOTime) }}"
-
