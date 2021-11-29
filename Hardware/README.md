@@ -52,23 +52,14 @@ associated with sensors and the server api address.
 
 ## Hardware
 
-The board used for the project is a nodemcu with an esp32 microcontroller.
+The board used for the project is a [nodemcu](https://components101.com/development-boards/nodemcu-esp8266-pinout-features-and-datasheet)
+with an [esp32](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf) microcontroller.
 
-![Temperature sensor](images/nodemcu.jpg)
 
 The following sensors are used to obtain the reads:
-
-- Two ds18b20 for indoor and outdoor temperature measurements
-
-  ![Temperature sensor](images/temp_sensor.jpg)
-
-- A MQ-135 sensor for indoor CO2 measurement
-
-  ![Temperature sensor](images/co2_sensor.jpg)
-
-- A Grove Dust Sensor(PPD42NS) for outdoor pollution levels
-
-  ![Temperature sensor](images/pollution_sensor.jpg)
+- Two [ds18b20](https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf) for indoor and outdoor temperature measurements
+- A [MQ-135](https://www.electronicoscaldas.com/datasheet/MQ-135_Hanwei.pdf) sensor for indoor CO2 measurement
+- A PM2.5 detector [PPD42NS](https://www.mouser.com/datasheet/2/744/Seeed_101020012-1217636.pdf) for outdoor pollution levels
 
 To communicate between the internal and external modules, a normal RJ11 cable can be used,
 with the following setup:
@@ -80,4 +71,4 @@ with the following setup:
 
 Here it is the final prototype:
 
-![Prototype](images/prototype.jpg)
+![Prototype](images/prototype.png)

@@ -5,6 +5,8 @@ Air quality monitoring system.
 Pure Air stack is designed to be horizontally scalable through [kubernetes](http://kubernetes.io), both Frontend and
 Backend are stateless and designed as a microservice that can be run in a container.
 
+#### live demo available at [pure-air.cloud](https://pure-air.cloud)
+
 ## Getting started
 
 Run our web stack with:
@@ -41,6 +43,13 @@ Based on [Swagger](https://swagger.io/) and [OpenAPI](https://swagger.io/specifi
 
 ![Backend](docs/b.png)
 
+## Home assistant
+
+We empower the user by providing home assist integration that can be used in conjunction within a smart home in a
+domotic environment.
+
+![Backend](Hassio/images/home.png)
+
 ## Database
 
 MongoDB is our database, flexible enough and optimized for our needs is able to manage well
@@ -49,32 +58,15 @@ GeoJSON data with its [2dsphere geospatial index](https://docs.mongodb.com/manua
 For testing purposes we created a [populator](Database/populate/populate.py) script to create, fill and index the
 database.
 
-## Home assistant
-
-We empower the user by providing home assist integration that can be used in conjunction within a smart home in a
-domotic environment.
-
-![Backend](Hassio/images/home.png)
-
 ## Hardware
 
-The board used for the project is a nodemcu with an esp32 microcontroller.
-
-![Temperature sensor](Hardware/images/nodemcu.jpg)
+The board used for the project is a [nodemcu](https://components101.com/development-boards/nodemcu-esp8266-pinout-features-and-datasheet)
+with an [esp32](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf) microcontroller.
 
 The following sensors are used to obtain the reads:
-
-- Two ds18b20 for indoor and outdoor temperature measurements
-
-  ![Temperature sensor](Hardware/images/temp_sensor.jpg)
-
-- A MQ-135 sensor for indoor CO2 measurement
-
-  ![Temperature sensor](Hardware/images/co2_sensor.jpg)
-
-- A Grove Dust Sensor(PPD42NS) for outdoor pollution levels
-
-  ![Temperature sensor](Hardware/images/pollution_sensor.jpg)
+- Two [ds18b20](https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf) for indoor and outdoor temperature measurements
+- A [MQ-135](https://www.electronicoscaldas.com/datasheet/MQ-135_Hanwei.pdf) sensor for indoor CO2 measurement
+- A PM2.5 detector [PPD42NS](https://www.mouser.com/datasheet/2/744/Seeed_101020012-1217636.pdf) for outdoor pollution levels
 
 To communicate between the internal and external modules, a normal RJ11 cable can be used,
 with the following setup:
@@ -86,7 +78,7 @@ with the following setup:
 
 Here it is the final prototype:
 
-![Prototype](Hardware/images/prototype.jpg)
+![Prototype](Hardware/images/prototype.png)
 
 ## Firmware
 
