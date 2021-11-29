@@ -15,8 +15,10 @@ Run our web stack with:
 docker-compose up
 ```
 
-Once everything started up you can start sending data with your Pure Air IOT device, check out [Hardware](Hardware) for
-the source code.
+You can now view the web ui with [http://localhost:12380](http://localhost:12380)
+
+Once everything is up and running you can start sending data with your Pure Air IOT device, check out [Hardware](Hardware)
+to find the sources on how to build one.
 
 ## Frontend
 
