@@ -2,10 +2,10 @@
 
 Air quality monitoring system.
 
-Pure Air stack is designed to be horizontally scalable through [kubernetes](http://kubernetes.io), both Frontend and
-Backend are stateless and designed as a microservice that can be run in a container.
+Pure Air is our project submission to the IoT HarmonyOS Hackathon organized by Huawei, getting awarded 2nd place in Europe.
 
-#### live demo available at [pure-air.cloud](https://pure-air.cloud)
+The software stack is designed to be horizontally scalable through [kubernetes](http://kubernetes.io), both Frontend and
+Backend are stateless and designed as a microservice that can be deployed in a container.
 
 ## Getting started
 
@@ -36,7 +36,7 @@ used by the authorities to improve the well being of citizens or can be used by 
 
 ## Backend
 
-Based on [Swagger](https://swagger.io/) and [OpenAPI](https://swagger.io/specification/) and though to be scalable through container-based replication systems such as [kubernetes](https://kubernetes.io).
+Based on [Swagger](https://swagger.io/) and [OpenAPI](https://swagger.io/specification/) and meant to be scalable through container-based replication systems such as [kubernetes](https://kubernetes.io).
 
 - Three private APIs endpoints for the user private area
 
@@ -54,8 +54,8 @@ domotic environment.
 
 ## Database
 
-MongoDB is our database, flexible enough and optimized for our needs is able to manage well
-GeoJSON data with its [2dsphere geospatial index](https://docs.mongodb.com/manual/core/2dsphere/)
+MongoDB is our database, flexible enough and optimized for our needs is able to perform fast
+GeoJSON data queries using its [2dsphere geospatial index](https://docs.mongodb.com/manual/core/2dsphere/)
 
 For testing purposes we created a [populator](Database/populate/populate.py) script to create, fill and index the
 database.
@@ -78,19 +78,12 @@ with the following setup:
 - Yellow wire -> Temperature sensor one wire bus
 - Green wire -> LO-time dust sensor signal
 
-Here it is the final prototype:
-
-![Prototype](Hardware/images/prototype.png)
-
 ## Firmware
 
 The firmware is written in [Rust](https://www.rust-lang.org/), a powerful, fast and secure language
 that can target the esp32 chipset, with a full standard library support.
 
-Rust has also a huge set of libraries, all open-source and hosted on [crates.io](https://crates.io/)
-
-This allows faster code writing, while having much bigger safety than other low-level languages such as C or C++.
-
+Rust has also a huge set of libraries, all open-source and hosted on [crates.io](https://crates.io/), this allows faster code writing, while having much better safety than other low-level languages such as C or C++.
 Under the hood the Rust standard library for esp32 calls the routines of the official open-source Espressif real time os.
 
 For information about building and running the PureAir firmware, take a look at the [Hardware README](Hardware/README.md)
